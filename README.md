@@ -28,13 +28,13 @@ SO THAT I can organize and plan my business
 
 - To install necessary dependencies, run the following command :
 
-npm init
+   npm init
 
-npm install inquirer
+   npm install inquirer
 
-npm install mysql2
+   npm install mysql2
 
-npm install console-tabl
+   npm install console-tabl
 
 - The application will be invoked with the following command:
   npm start
