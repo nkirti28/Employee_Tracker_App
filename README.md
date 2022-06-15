@@ -1,4 +1,4 @@
-# EMPLOYEE TRACKER APP
+# Employee Tracker App
 
 ![badge](https://img.shields.io/badge/license-MIT-blue)
 
