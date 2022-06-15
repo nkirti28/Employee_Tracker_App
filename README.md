@@ -49,7 +49,7 @@ For more information on how to add screenshots for examples, visit the following
 
 [Mark Down Tutorial](https://agea.github.io/tutorial.md/)
 
-[Demo](./assets/Employee_tracker.gif)
+![Demo](./assets/Employee_tracker.gif)
 
 ## [License](#table-of-contents)
 
