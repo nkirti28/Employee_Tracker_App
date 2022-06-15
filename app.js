@@ -8,13 +8,13 @@ const cTable = require("console.table");
 const PORT = process.env.PORT || 3001;
 
 // Connect to database
-const db = mysql.createConnection(
+const connection = mysql.createConnection(
   {
     host: "localhost",
     // MySQL username,
     user: "root",
-    // MySQL password process.env.MYSQL_PASSWORD
-    password: "",
+    // MySQL password
+    password: "#Abc235139",
     database: "employee_db",
   },
   console.log(`Connected to the employee_db database.`)
@@ -128,7 +128,7 @@ showDepartments = () => {
   console.log("Showing all departments...\n");
   const sql = `SELECT department.id AS id, department.name AS department FROM department`;
 
-  connection.promise().query(sql, (err, rows) => {
+  connection.query(sql, (err, rows) => {
     if (err) throw err;
     console.table(rows);
     promptUser();
@@ -141,7 +141,7 @@ showRoles = () => {
   const sql = `SELECT role.id, role.title, department.name AS department
                FROM role
                INNER JOIN department ON role.department_id = department.id`;
-  connection.promise().query(sql, (err, rows) => {
+  connection.query(sql, (err, rows) => {
     if (err) throw err;
     console.table(rows);
     promptUser();
@@ -163,7 +163,7 @@ showEmployees = () => {
                       LEFT JOIN department ON role.department_id = department.id
                       LEFT JOIN employee manager ON employee.manager_id = manager.id`;
 
-  connection.promise().query(sql, (err, rows) => {
+  connection.query(sql, (err, rows) => {
     if (err) throw err;
     console.table(rows);
     promptUser();
@@ -222,11 +222,11 @@ addRole = () => {
         name: "salary",
         message: "What is the salary of this role?",
         validate: (addSalary) => {
-          if (isNAN(addSalary)) {
-            return true;
-          } else {
+          if (isNaN(addSalary)) {
             console.log("Please enter a salary");
             return false;
+          } else {
+            return true;
           }
         },
       },
@@ -237,7 +237,7 @@ addRole = () => {
       // grab dept from department table
       const roleSql = `SELECT name, id FROM department`;
 
-      connection.promise().query(roleSql, (err, data) => {
+      connection.query(roleSql, (err, data) => {
         if (err) throw err;
 
         const dept = data.map(({ name, id }) => ({ name: name, value: id }));
@@ -306,7 +306,7 @@ addEmployee = () => {
       // grab roles from roles table
       const roleSql = `SELECT role.id, role.title FROM role`;
 
-      connection.promise().query(roleSql, (err, data) => {
+      connection.query(roleSql, (err, data) => {
         if (err) throw err;
 
         const roles = data.map(({ id, title }) => ({ name: title, value: id }));
@@ -326,7 +326,7 @@ addEmployee = () => {
 
             const managerSql = `SELECT * FROM employee`;
 
-            connection.promise().query(managerSql, (err, data) => {
+            connection.query(managerSql, (err, data) => {
               if (err) throw err;
 
               const managers = data.map(({ id, first_name, last_name }) => ({
@@ -370,7 +370,7 @@ updateEmployee = () => {
   // get employees from employee table
   const employeeSql = `SELECT * FROM employee`;
 
-  connection.promise().query(employeeSql, (err, data) => {
+  connection.query(employeeSql, (err, data) => {
     if (err) throw err;
 
     const employees = data.map(({ id, first_name, last_name }) => ({
@@ -394,7 +394,7 @@ updateEmployee = () => {
 
         const roleSql = `SELECT * FROM role`;
 
-        connection.promise().query(roleSql, (err, data) => {
+        connection.query(roleSql, (err, data) => {
           if (err) throw err;
 
           const roles = data.map(({ id, title }) => ({
@@ -440,7 +440,7 @@ updateManager = () => {
   // get employees from employee table
   const employeeSql = `SELECT * FROM employee`;
 
-  connection.promise().query(employeeSql, (err, data) => {
+  connection.query(employeeSql, (err, data) => {
     if (err) throw err;
 
     const employees = data.map(({ id, first_name, last_name }) => ({
@@ -464,7 +464,7 @@ updateManager = () => {
 
         const managerSql = `SELECT * FROM employee`;
 
-        connection.promise().query(managerSql, (err, data) => {
+        connection.query(managerSql, (err, data) => {
           if (err) throw err;
 
           const managers = data.map(({ id, first_name, last_name }) => ({
@@ -515,7 +515,7 @@ employeeDepartment = () => {
                LEFT JOIN role ON employee.role_id = role.id 
                LEFT JOIN department ON role.department_id = department.id`;
 
-  connection.promise().query(sql, (err, rows) => {
+  connection.query(sql, (err, rows) => {
     if (err) throw err;
     console.table(rows);
     promptUser();
@@ -526,7 +526,7 @@ employeeDepartment = () => {
 deleteDepartment = () => {
   const deptSql = `SELECT * FROM department`;
 
-  connection.promise().query(deptSql, (err, data) => {
+  connection.query(deptSql, (err, data) => {
     if (err) throw err;
 
     const dept = data.map(({ name, id }) => ({ name: name, value: id }));
@@ -558,7 +558,7 @@ deleteDepartment = () => {
 deleteRole = () => {
   const roleSql = `SELECT * FROM role`;
 
-  connection.promise().query(roleSql, (err, data) => {
+  connection.query(roleSql, (err, data) => {
     if (err) throw err;
 
     const role = data.map(({ title, id }) => ({ name: title, value: id }));
@@ -591,7 +591,7 @@ deleteEmployee = () => {
   // get employees from employee table
   const employeeSql = `SELECT * FROM employee`;
 
-  connection.promise().query(employeeSql, (err, data) => {
+  connection.query(employeeSql, (err, data) => {
     if (err) throw err;
 
     const employees = data.map(({ id, first_name, last_name }) => ({
@@ -628,12 +628,12 @@ viewBudget = () => {
   console.log("Showing budget by department...\n");
 
   const sql = `SELECT department_id AS id, 
-                      department.dept_name AS department,
+                      department.name AS department,
                       SUM(salary) AS budget
                FROM  role  
                JOIN department ON role.department_id = department.id GROUP BY  department_id`;
 
-  connection.promise().query(sql, (err, rows) => {
+  connection.query(sql, (err, rows) => {
     if (err) throw err;
     console.table(rows);
 
