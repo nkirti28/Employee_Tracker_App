@@ -49,7 +49,7 @@ For more information on how to add screenshots for examples, visit the following
 
 [Mark Down Tutorial](https://agea.github.io/tutorial.md/)
 
-![Heroku]
+[Demo](./assets/Employee_Tracker_App.mp4)
 
 ## [License](#table-of-contents)
 
