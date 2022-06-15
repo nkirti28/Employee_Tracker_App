@@ -28,13 +28,13 @@ SO THAT I can organize and plan my business
 
 - To install necessary dependencies, run the following command :
 
-   npm init
+  npm init
 
-   npm install inquirer
+  npm install inquirer
 
-   npm install mysql2
+  npm install mysql2
 
-   npm install console-tabl
+  npm install console-tabl
 
 - The application will be invoked with the following command:
   npm start
@@ -49,7 +49,7 @@ For more information on how to add screenshots for examples, visit the following
 
 [Mark Down Tutorial](https://agea.github.io/tutorial.md/)
 
-[Demo](./assets/Employee_Tracker_App.mp4)
+[Demo](./assets/Employee_tracker.gif)
 
 ## [License](#table-of-contents)
 
