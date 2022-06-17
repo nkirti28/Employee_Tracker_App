@@ -5,6 +5,8 @@ const inquirer = require("inquirer");
 // import and require console.table
 const cTable = require("console.table");
 
+require("dotenv").config();
+
 const PORT = process.env.PORT || 3001;
 
 // Connect to database
@@ -12,10 +14,10 @@ const connection = mysql.createConnection(
   {
     host: "localhost",
     // MySQL username,
-    user: "root",
+    user: process.env.DB_USER,
     // MySQL password
-    password: "#Abc235139",
-    database: "employee_db",
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
   },
   console.log(`Connected to the employee_db database.`)
 );
